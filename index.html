@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <title>Typing</title>
+  </head>
+  <body>
+    <div class="back_drop">
+
+<div class="centre_main">
+
+    <div class="main_text ">
+    <h2>welcome to typing master</h2>
+    </div>
+
+    <div class="head">
+    <h3 class="head_text" id="head_text"> Randome text will show here</h3>
+    </div>
+
+</div>
+
+<div class="container">
+<textarea placeholder="ok ! lets start typing"  id="mywords" rows="8" cols="80"></textarea>
+</div>
+<div class="btn_div" >
+<button type="button"  name="button" class="btn"  id="btn">Start</button>
+</div>
+      </div>
+    </div>
+
+
+<script>
+const setOfWords = ["Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
+                    "when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",
+                    "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,",
+                    " looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source."
+                  ];
+
+
+const msg = document.getElementById('head_text');
+const typed = document.getElementById('mywords');
+const btn = document.getElementById('btn');
+
+let startTime , endTime;
+let secound = 00;
+let minute = 00;
+interval = null;
+interval = setInterval(stopWatch);
+function stopWatch() {
+
+secound ++;
+if (secound/60===1) {
+ secound = 00;
+minute++ ;
+}
+}
+
+
+const playGame = () => {
+  let randomNumber = Math.floor(Math.random()*setOfWords.length);
+  msg.innerText = setOfWords[randomNumber];
+  let date = new Date();
+  startTime = date.getTime();
+   btn.innerText = "Done";
+   btn.style.background="deepskyblue";
+
+  }
+
+
+ const endPlay = () => {
+   let date = new Date();
+   endTime = date.getTime();
+   let totalTime = ((endTime - startTime)/1000);
+   let totalstr = typed.value;
+   let wordCount = wordCounter(totalstr);
+let speed = Math.round((wordCount / totalTime)*60);
+let finalmsg = " you typed total at " + speed + " words per minute ";
+ finalmsg += compare(msg.innerText, totalstr);
+
+msg.innerText = finalmsg;
+ }
+const compare = (str1,str2) => {
+
+let words1 = str1.split(" ");
+let words2 = str2.split(" ");
+let count = 0;
+
+words1.forEach(function(item, index){
+if(item == words2[index]){
+  count ++;
+}
+});
+
+let error = (words1.length - count);
+return (" "+ count + " correct out of " + words1.length +
+" words and the total error is "+ error );
+}
+
+   const wordCounter = (str) => {
+   let response = str.split(" ").length;
+   console.log(response);
+   return response;
+ }
+
+function playTime(){
+  let time = Date();
+  let clock = time.toLocaleTimeString();
+  document.getElementById('clockTime').innerHTML= clock;
+}
+
+btn.addEventListener('click', function(){
+    if(this.innerText == 'Start'){
+    typed.disabled = false;
+    playGame();
+
+  }else if (this.innerText = "Done"){
+        typed.disabled = true;
+        btn.innerText = "Start";
+        endPlay();
+  }
+})
+
+
+btn.addEventListener('click', function(){
+    if(this.innerText == 'Start'){
+      onOff();
+
+  }
+})
+
+
+document.getElementById('clock').innerHTML = secound;
+function onOff(){
+  if (btn.innerText = "Done") {
+    interval = window.setInterval(stopWatch,1000);
+  }
+  else {
+    window.clearInterval(Interval);
+  }
+}
+
+
+</script>
+</body>
+</html>
